@@ -21,7 +21,7 @@ Key Layer_::lookup(byte row, byte col) {
 }
 
 uint8_t Layer_::top (void) {
-    for (uint8_t i = 31; i >= 0; i--) {
+    for (int8_t i = 31; i >= 0; i--) {
         if (bitRead (LayerState, i))
             return i;
     }
