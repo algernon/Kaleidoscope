@@ -1,4 +1,5 @@
 #include "key_events.h"
+#include "layers.h"
 
 void handle_synthetic_key_event(Key mappedKey, uint8_t keyState) {
     if (!key_toggled_on(keyState))
@@ -17,17 +18,9 @@ void handle_synthetic_key_event(Key mappedKey, uint8_t keyState) {
 
 custom_handler_t eventHandlers[HOOK_MAX];
 
-Key lookup_key(byte keymap, byte row, byte col) {
-    Key mappedKey;
-
-    mappedKey.raw = pgm_read_word(&(keymaps[keymap][row][col]));
-
-    return mappedKey;
-}
-
 void handle_key_event(Key mappedKey, byte row, byte col, uint8_t keyState) {
     if (!(keyState & INJECTED)) {
-        mappedKey = lookup_key(temporary_keymap, row, col);
+        mappedKey = Layer.lookup(row, col);
     }
     for (byte i = 0; eventHandlers[i] != NULL && i < HOOK_MAX; i++) {
         custom_handler_t handler = eventHandlers[i];
@@ -40,14 +33,9 @@ bool handle_key_event_default(Key mappedKey, byte row, byte col, uint8_t keyStat
     //for every newly pressed button, figure out what logical key it is and send a key down event
     // for every newly released button, figure out what logical key it is and send a key up event
 
-    Key baseKey = Key_NoKey;
-    if (!(keyState & INJECTED)) {
-      baseKey = lookup_key(primary_keymap, row, col);
-    }
-
-    if ((baseKey.flags & SWITCH_TO_KEYMAP
-      || baseKey.flags & SWITCH_TO_KEYMAP_MOMENTARY)) {
-        handle_keymap_key_event(baseKey, keyState);
+    if ((mappedKey.flags & SWITCH_TO_KEYMAP
+      || mappedKey.flags & SWITCH_TO_KEYMAP_MOMENTARY)) {
+        handle_keymap_key_event(mappedKey, keyState);
     } else if (mappedKey.flags & SYNTHETIC) {
         handle_synthetic_key_event( mappedKey, keyState);
     } else if (key_is_pressed(keyState)) {
@@ -102,20 +90,25 @@ void handle_keymap_key_event(Key keymapEntry, uint8_t keyState) {
     if (keymapEntry.flags & SWITCH_TO_KEYMAP_MOMENTARY ) {
         if (key_toggled_on(keyState)) {
             if ( keymapEntry.rawKey == KEYMAP_NEXT) {
-                temporary_keymap++;
+                Layer.next();
             } else if ( keymapEntry.rawKey == KEYMAP_PREVIOUS) {
-                temporary_keymap--;
+                Layer.previous();
             } else {
-                temporary_keymap = keymapEntry.rawKey;
+                Layer.on(keymapEntry.rawKey);
             }
         }
         if (key_toggled_off(keyState)) {
-            temporary_keymap = primary_keymap;
+            if ( keymapEntry.rawKey == KEYMAP_NEXT) {
+                Layer.previous();
+            } else if ( keymapEntry.rawKey == KEYMAP_PREVIOUS) {
+                Layer.next();
+            } else {
+                Layer.off(keymapEntry.rawKey);
+            }
         }
 
         // switch keymap and stay there
     } else if (key_toggled_on(keyState)) {
-        temporary_keymap = primary_keymap = keymapEntry.rawKey;
-        Storage.save_primary_keymap(primary_keymap);
+        Layer.on (keymapEntry.rawKey);
     }
 }

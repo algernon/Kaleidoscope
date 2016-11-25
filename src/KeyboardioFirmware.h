@@ -23,11 +23,9 @@ void setup();
 
 #include "KeyboardConfig.h"
 #include "key_events.h"
+#include "layers.h"
 
 extern HARDWARE_IMPLEMENTATION KeyboardHardware;
-
-extern uint8_t primary_keymap;
-extern uint8_t temporary_keymap;
 
 #ifndef VERSION
 #define VERSION "locally-built"

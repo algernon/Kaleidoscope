@@ -14,7 +14,7 @@ Keyboardio_::setup(const byte keymap_count) {
     KeyboardHardware.setup();
     LEDControl.setup();
 
-    temporary_keymap = primary_keymap = Storage.load_primary_keymap(keymap_count);
+    Layer.defaultLayer (Storage.load_primary_keymap (keymap_count));
 }
 
 custom_loop_t loopHooks[HOOK_MAX];

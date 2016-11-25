@@ -50,6 +50,7 @@ typedef union {
 
 #define Key_NoKey (Key){ KEY_FLAGS,0 }
 #define Key_skip (Key){ KEY_FLAGS,0 }
+#define Key_Trans (Key){ .raw = 0xffff }
 
 
 #define Key_powerDown (Key) {KEY_FLAGS | SYNTHETIC|IS_SYSCTL,HID_SYSTEM_POWER_DOWN }
