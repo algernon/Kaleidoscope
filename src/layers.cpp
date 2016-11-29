@@ -11,10 +11,13 @@ Layer_::Layer_ (void) {
 
 Key Layer_::lookup(byte row, byte col) {
     Key mappedKey;
-    int8_t layer = top ();
+    int8_t layer = 31;
+
+    mappedKey.raw = Key_Trans.raw;
 
     do {
-        mappedKey.raw = pgm_read_word(&(keymaps[layer][row][col]));
+        if (Layer.isOn (layer))
+            mappedKey.raw = pgm_read_word(&(keymaps[layer][row][col]));
         layer--;
     } while (mappedKey.raw != Key_Trans.raw && layer > DefaultLayer);
 
