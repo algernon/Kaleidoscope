@@ -33,6 +33,17 @@ bool handle_key_event_default(Key mappedKey, byte row, byte col, uint8_t keyStat
     //for every newly pressed button, figure out what logical key it is and send a key down event
     // for every newly released button, figure out what logical key it is and send a key up event
 
+  Serial.print ("[debug]: handle_key_event_default({");
+  Serial.print (mappedKey.flags, BIN);
+  Serial.print (mappedKey.rawKey, DEC);
+  Serial.print ("}, ");
+  Serial.print (row, DEC);
+  Serial.print (", ");
+  Serial.print (col, DEC);
+  Serial.print (", ");
+  Serial.print (keyState, BIN);
+  Serial.println (")");
+
     if ((mappedKey.flags & SWITCH_TO_KEYMAP
       || mappedKey.flags & SWITCH_TO_KEYMAP_MOMENTARY)) {
         handle_keymap_key_event(mappedKey, keyState);
@@ -87,6 +98,8 @@ void release_key(Key mappedKey) {
 
 
 void handle_keymap_key_event(Key keymapEntry, uint8_t keyState) {
+  Serial.println ("[debug]: handle_keymap_key_event called");
+
     if (keymapEntry.flags & SWITCH_TO_KEYMAP_MOMENTARY ) {
         if (key_toggled_on(keyState)) {
             if ( keymapEntry.rawKey == KEYMAP_NEXT) {
