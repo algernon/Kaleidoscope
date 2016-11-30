@@ -15,11 +15,12 @@ Key Layer_::lookup(byte row, byte col) {
 
     mappedKey.raw = Key_Trans.raw;
 
-    do {
+    while (mappedKey.raw == Key_Trans.raw &&
+           layer >= DefaultLayer) {
         if (Layer.isOn (layer))
             mappedKey.raw = pgm_read_word(&(keymaps[layer][row][col]));
         layer--;
-    } while (mappedKey.raw != Key_Trans.raw && layer >= DefaultLayer);
+    }
 
     // [debug] Layer_::lookup(row, col) = (flags, rawKey) @ layer
     Serial.print ("[debug] Layer_::lookup(");
@@ -32,6 +33,7 @@ Key Layer_::lookup(byte row, byte col) {
     Serial.print (mappedKey.rawKey, DEC);
     Serial.print (") @ ");
     Serial.println (layer, DEC);
+
     return mappedKey;
 }
 
