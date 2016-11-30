@@ -19,6 +19,18 @@ void handle_synthetic_key_event(Key mappedKey, uint8_t keyState) {
 custom_handler_t eventHandlers[HOOK_MAX];
 
 void handle_key_event(Key mappedKey, byte row, byte col, uint8_t keyState) {
+  Serial.print ("[debug]: handle_key_event({");
+  Serial.print (mappedKey.flags, BIN);
+  Serial.print (", ");
+  Serial.print (mappedKey.rawKey, DEC);
+  Serial.print ("}, ");
+  Serial.print (row, DEC);
+  Serial.print (", ");
+  Serial.print (col, DEC);
+  Serial.print (", ");
+  Serial.print (keyState, BIN);
+  Serial.println (")");
+
     if (!(keyState & INJECTED)) {
         mappedKey = Layer.lookup(row, col);
     }
@@ -35,6 +47,7 @@ bool handle_key_event_default(Key mappedKey, byte row, byte col, uint8_t keyStat
 
   Serial.print ("[debug]: handle_key_event_default({");
   Serial.print (mappedKey.flags, BIN);
+  Serial.print (", ");
   Serial.print (mappedKey.rawKey, DEC);
   Serial.print ("}, ");
   Serial.print (row, DEC);
