@@ -75,12 +75,16 @@ void Layer_::off (uint8_t layer) {
 }
 
 boolean Layer_::isOn (uint8_t layer) {
-  Serial.print ("[debug] Layer_::isOn(");
-  Serial.print (layer, DEC);
-  Serial.print (") = ");
-  Serial.println (bitRead (LayerState, layer), DEC);
+  bool r = bitRead(LayerState, layer);
 
-  return bitRead(LayerState, layer);
+  if (r) {
+    Serial.print ("[debug] Layer_::isOn(");
+    Serial.print (layer, DEC);
+    Serial.print (") = ");
+    Serial.println (r, DEC);
+  }
+
+  return r;
 }
 
 void Layer_::next (void) {
