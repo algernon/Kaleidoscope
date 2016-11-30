@@ -7,7 +7,7 @@ Keyboardio_::Keyboardio_(void) {
 
 void
 Keyboardio_::setup(const byte keymap_count) {
-    Serial.println ("[debug]: Keyboardio_::setup() called")
+    Serial.println ("[debug]: Keyboardio_::setup() called");
     event_handler_hook_add (handle_key_event_default);
     wdt_disable();
     delay(100);
