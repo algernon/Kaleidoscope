@@ -64,14 +64,20 @@ bool handle_key_event_default(Key mappedKey, byte row, byte col, uint8_t keyStat
 
     if ((mappedKey.flags & SWITCH_TO_KEYMAP
       || mappedKey.flags & SWITCH_TO_KEYMAP_MOMENTARY)) {
+      Serial.println("[debug]: keymap branch");
         handle_keymap_key_event(mappedKey, keyState);
     } else if (mappedKey.flags & SYNTHETIC) {
+      Serial.println("[debug]: synthetic branch");
         handle_synthetic_key_event( mappedKey, keyState);
     } else if (key_is_pressed(keyState)) {
+      Serial.println("[debug]: pressed branch");
         press_key(mappedKey);
     } else if (key_toggled_off(keyState) && (keyState & INJECTED)) {
+      Serial.println("[debug]: release branch");
         release_key(mappedKey);
     }
+
+    Serial.println ("[debug]: handle_key_event_default END");
     return true;
 }
 
