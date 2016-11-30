@@ -36,6 +36,11 @@ void handle_key_event(Key mappedKey, byte row, byte col, uint8_t keyState) {
     }
     for (byte i = 0; eventHandlers[i] != NULL && i < HOOK_MAX; i++) {
         custom_handler_t handler = eventHandlers[i];
+        Serial.print ("[debug]: custom handler[");
+        Serial.print (i, DEC);
+        Serial.print ("]=");
+        Serial.println((int)(handler), HEX);
+
         if ((*handler)(mappedKey, row, col, keyState))
             return;
     }

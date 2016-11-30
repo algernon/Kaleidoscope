@@ -55,6 +55,8 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 
 void setup() {
     Keyboardio.setup(KEYMAP_SIZE);
+    Serial.print ("[debug]: handle_key_event_default=");
+    Serial.println((int)(&handle_key_event_default), HEX);
 }
 
 
