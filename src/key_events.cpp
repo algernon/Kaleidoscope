@@ -20,7 +20,12 @@ custom_handler_t eventHandlers[HOOK_MAX];
 Key lookup_key(byte keymap, byte row, byte col) {
     Key mappedKey;
 
-    mappedKey.raw = pgm_read_word(&(keymaps[keymap][row][col]));
+    if (Storage.useEEPROMKeymap ()) {
+        EEPROM.get (EEPROM_KEYMAP_START + (keymap * ROWS * COLS + row * COLS + col) * 2,
+                    mappedKey.raw);
+    } else {
+        mappedKey.raw = pgm_read_word(&(keymaps[keymap][row][col]));
+    }
 
     return mappedKey;
 }
@@ -116,6 +121,6 @@ void handle_keymap_key_event(Key keymapEntry, uint8_t keyState) {
         // switch keymap and stay there
     } else if (key_toggled_on(keyState)) {
         temporary_keymap = primary_keymap = keymapEntry.rawKey;
-        Storage.save_primary_keymap(primary_keymap);
+        Storage.defaultKeymap(primary_keymap);
     }
 }
