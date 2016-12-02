@@ -6,6 +6,7 @@
 
 #include "Keyboardio-MouseKeys.h"
 #include "Keyboardio-Macros.h"
+#include "Keyboardio-Commander.h"
 #include "KeyboardioFirmware.h"
 #include "generated/keymaps.h"
 
@@ -54,6 +55,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 }
 
 void setup() {
+    Commander.setup();
     Keyboardio.setup(KEYMAP_SIZE);
 }
 
