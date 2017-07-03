@@ -155,7 +155,7 @@ The goals of the style guide as we currently see them are as follows:
 
 <dt>Style rules should pull their weight</dt>
 <dd>
-The benefit of a style rule must be large enough to justify asking all of our engineers to remember it. The benefit is measured relative to the codebase we would get without the rule, so a rule against a very harmful practice may still have a small benefit if people are unlikely to do it anyway. This principle mostly explains the rules we don't have, rather than the rules we do: for example, `goto` contravenes many of the following principles, but is already vanishingly rare, so the Style Guide doesn't discuss it.
+The benefit of a style rule must be large enough to justify asking all of our contributors to remember it. The benefit is measured relative to the codebase we would get without the rule, so a rule against a very harmful practice may still have a small benefit if people are unlikely to do it anyway. This principle mostly explains the rules we don't have, rather than the rules we do: for example, `goto` contravenes many of the following principles, but is already vanishingly rare, so the Style Guide doesn't discuss it.
 </dd>
 
 <dt>Optimize for the reader, not the writer</dt>
