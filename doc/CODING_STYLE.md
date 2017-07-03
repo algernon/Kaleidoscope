@@ -215,7 +215,7 @@ It does not matter much what hardware the example is for, as long as there is on
 
 <dt>Be mindful of the documentation</dt>
 <dd>
-Documenting the interfaces of the library, how to use it, its dependencies, in a way that is meaningful for a novice user is a very strong recommendation. The `README.md` in a library should target a novice audience. Would one want or need to document parts of the code that is only meaningful for more advanced programmers, do so in the code.
+Documenting the interfaces of the library, how to use it, its dependencies, in a way that is meaningful for a novice user is a very strong recommendation. The <code>README.md</code> in a library should target a novice audience. Would one want or need to document parts of the code that is only meaningful for more advanced programmers, do so in the code.
 </dd>
 
 <dt>Use the tools provided in Kaleidoscope-Plugin</dt>
