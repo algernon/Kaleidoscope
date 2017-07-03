@@ -135,8 +135,6 @@ Our style guide is based on the [Google C++ style guide][goog:c++-guide] which w
 
 ## Background
 
-<!-- TODO: Review this section, the Google-specifc wording was replaced with something more appropriate -->
-
 C++ is the language of Arduino libraries, and as a consequence, in which Kaleidoscope was written in. As every C++ programmer knows, the language has many powerful features, but this power brings with it complexity, which in turn can make code more bug-prone and harder to read and maintain.
 
 The goal of this guide is to manage this complexity by describing in detail the dos and don'ts of writing C++ code. These rules exist to keep the code base manageable while still allowing coders to use C++ language features productively.
@@ -160,7 +158,6 @@ The goals of the style guide as we currently see them are as follows:
 The benefit of a style rule must be large enough to justify asking all of our engineers to remember it. The benefit is measured relative to the codebase we would get without the rule, so a rule against a very harmful practice may still have a small benefit if people are unlikely to do it anyway. This principle mostly explains the rules we don't have, rather than the rules we do: for example, `goto` contravenes many of the following principles, but is already vanishingly rare, so the Style Guide doesn't discuss it.
 </dd>
 
-<!-- TODO: Review the Kaleidoscope/Arduino bits -->
 <dt>Optimize for the reader, not the writer</dt>
 <dd>
 Our codebase (and most individual components submitted to it) is expected to continue for quite some time. As a result, more time will be spent reading most of our code than writing it. We explicitly choose to optimize for the experience of our average software engineer reading, maintaining, and debugging code in our codebase rather than ease when writing said code. <em>"Leave a trace for the reader"</em> is a particularly common sub-point of this principle: When something surprising or unusual is happening in a snippet of code (for example, transfer of pointer ownership), leaving textual hints for the reader at the point of use is valuable (<code>std::unique_ptr</code> demonstrates the ownership transfer unambiguously at the call site). This is doubly true for libraries meant to be used by end-users, where the target audience is not software engineers, but novice users of the Arduino ecosystem. People for whom their Sketch may be the first program they ever write.
@@ -171,7 +168,6 @@ Our codebase (and most individual components submitted to it) is expected to con
 Using one style consistently through our codebase lets us focus on other (more important) issues. Consistency also allows for automation: tools that format your code or adjust your <code>#include</code>s only work properly when your code is consistent with the expectations of the tooling. In many cases, rules that are attributed to <em>"Be Consistent"</em> boil down to <em>"Just pick one and stop worrying about it"</em>; the potential value of allowing flexibility on these points is outweighed by the cost of having people argue over them.
 </dd>
 
-<!-- TODO: Review the Kaleidoscope/Arduino bits -->
 <dt>Be consistent with the broader Arduino community when appropriate</dt>
 <dd>
 Consistency with the way other Arduino libraries use C++ has value for the same reasons as consistency within our code base. Our libraries do not function in isolation, and they may very well be used together with libraries by the broader Arduino community. However, sometimes the idioms, or style used in other libraries do not fit the needs of our codebase. In those cases, it is appropriate to apply our own rules. Similarly, if a feature in the C++ standard solves a problem, or if some idiom is widely known and accepted, that's an argument for using it. However, sometimes standard features and idioms are flawed, or were just designed without our codebase's needs in mind. In those cases (as described below) it's appropriate to constrain or ban standard features.
@@ -182,13 +178,11 @@ Consistency with the way other Arduino libraries use C++ has value for the same 
 C++ has features that are more surprising or dangerous than one might think at a glance. Some style guide restrictions are in place to prevent falling into these pitfalls. There is a high bar for style guide waivers on such restrictions, because waiving such rules often directly risks compromising program correctness.
 </dd>
 
-<!-- TODO: Review the wording: changed to mention that our target are not necessarily programmers. -->
 <dt>Avoid constructs that our average C++ programmer would find tricky or hard to maintain</dt>
 <dd>
 C++ has features that may not be generally appropriate because of the complexity they introduce to the code. In widely used code, it may be more acceptable to use trickier language constructs, because any benefits of more complex implementation are multiplied widely by usage, and the cost in understanding the complexity does not need to be paid again when working with new portions of the codebase. When in doubt, waivers to rules of this type can be sought by asking your project leads. This is specifically important for our codebase because code ownership and team membership changes over time: even if everyone that works with some piece of code currently understands it, such understanding is not guaranteed to hold a few years from now. Not to mention that our target audience are average people, not average C++ programmers.
 </dd>
 
-<!-- TODO: Un-googlified... -->
 <dt>Be mindful of our scale</dt>
 <dd>
 With a codebase spanning many plugins, and even more when we consider the broader Arduino ecosystem, some mistakes and simplifications for one engineer can become costly for many. For instance it's particularly important to avoid polluting the global namespace: name collisions across a codebase of dozens of repositories are difficult to work with and hard to avoid if everyone puts things into the global namespace.
@@ -203,7 +197,6 @@ Performance optimizations can sometimes be necessary and appropriate, even when 
 The intent of this document is to provide maximal guidance with reasonable restriction. As always, common sense and good taste should prevail. By this we specifically refer to the established conventions of the entire community (both Kaleidoscope and Arduino communities), not just your personal preferences or those of your team. Be skeptical about and reluctant to use clever or unusual constructs: the absence of a prohibition is not the same as a license to proceed. Use your judgment, and if you are unsure, please don't hesitate to ask, to get additional input.
 
 ## Library Guidelines
-<!-- TODO: This is a whole new section! -->
 
 Before looking at the coding style guidelines, we must first talk about libraries. Every Kaleidoscope plugin is also an Arduino library. The core firmware is an Arduino library too. As such, libraries should follow the [Arduino library specification][arduino:library-spec] (revision 2.1 or later), with a few additional recommendations:
 
